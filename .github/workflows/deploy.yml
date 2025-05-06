@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Deploy to FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@master
         with:
           server: ftp.waqup.space
           username: waqup-website@waqup.space
