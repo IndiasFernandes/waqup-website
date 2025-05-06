@@ -59,6 +59,10 @@ This static site is designed to be easily converted to a React/Next.js applicati
 
 Private repository - All rights reserved
 
+## Test Deployment
+
+This line was added to test the GitHub Actions deployment workflow. If you can see this on the live site, the deployment is working correctly!
+
 ## Contact
 
 For questions about the website, contact the development team. 
