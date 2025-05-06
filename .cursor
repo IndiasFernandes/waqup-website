@@ -1,0 +1,24 @@
+{
+  "projectName": "waqup-website",
+  "rootPath": ".",
+  "files": {
+    "include": [
+      "**/*.html",
+      "**/*.css",
+      "**/*.js",
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.md"
+    ],
+    "exclude": [
+      "node_modules/**",
+      ".git/**",
+      "out/**",
+      ".next/**"
+    ]
+  },
+  "settings": {
+    "formatOnSave": true,
+    "defaultFormatter": "prettier"
+  }
+} 
