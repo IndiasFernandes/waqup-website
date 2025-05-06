@@ -32,48 +32,8 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white min-h-screen">
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-black/20 backdrop-blur-lg border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0">
-                    <span class="text-xl font-bold">waqup</span>
-                </div>
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white/80 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
-                <!-- Desktop menu -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-center space-x-8">
-                        <a href="#features" class="text-white/80 hover:text-white">Features</a>
-                        <a href="#how-it-works" class="text-white/80 hover:text-white">How It Works</a>
-                        <a href="#testimonials" class="text-white/80 hover:text-white">Testimonials</a>
-                        <a href="#pricing" class="text-white/80 hover:text-white">Pricing</a>
-                        <a href="/landing" class="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/90 transition-colors">
-                            Start Free
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- Mobile menu -->
-            <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <div class="flex flex-col space-y-4">
-                    <a href="#features" class="text-white/80 hover:text-white px-2 py-2 rounded-lg hover:bg-white/10 transition-colors">Features</a>
-                    <a href="#how-it-works" class="text-white/80 hover:text-white px-2 py-2 rounded-lg hover:bg-white/10 transition-colors">How It Works</a>
-                    <a href="#testimonials" class="text-white/80 hover:text-white px-2 py-2 rounded-lg hover:bg-white/10 transition-colors">Testimonials</a>
-                    <a href="#pricing" class="text-white/80 hover:text-white px-2 py-2 rounded-lg hover:bg-white/10 transition-colors">Pricing</a>
-                    <a href="/landing" class="bg-white text-black px-4 py-3 rounded-full text-sm font-semibold hover:bg-white/90 transition-colors text-center">
-                        Start Free
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
 
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden pt-16">
@@ -288,40 +248,32 @@
     <!-- Footer -->
     <div id="footer-placeholder"></div>
 
-    <script>
-        // Load footer
-        fetch('/components/footer.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('footer-placeholder').innerHTML = html;
-            })
-            .catch(error => console.error('Error loading footer:', error));
-    </script>
-
     <!-- Add mobile menu JavaScript -->
     <script>
         // Mobile menu functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Close mobile menu when clicking a link
-        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
-        });
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (event) => {
-            if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
-                mobileMenu.classList.add('hidden');
-            }
-        });
+            // Close mobile menu when clicking a link
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        }
 
         // Prevent default touch behavior on buttons
         document.querySelectorAll('.no-select').forEach(button => {
@@ -329,6 +281,36 @@
                 e.preventDefault();
             });
         });
+
+        // Load header
+        fetch('components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load header');
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                // Initialize mobile menu after header is loaded
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', () => {
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Load footer
+        fetch('components/footer.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load footer');
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
     </script>
 </body>
 </html> 

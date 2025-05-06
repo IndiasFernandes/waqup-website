@@ -228,6 +228,7 @@
     <!-- Footer -->
     <div id="footer-placeholder"></div>
 
+    <!-- Add mobile menu JavaScript -->
     <script>
         // Mobile menu functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -237,51 +238,61 @@
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
+
+            // Close mobile menu when clicking a link
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
         }
 
-        // Load footer
-        fetch('/components/footer.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('footer-placeholder').innerHTML = html;
-            })
-            .catch(error => console.error('Error loading footer:', error));
-
-        // FAQ functionality
-        const faqItems = document.querySelectorAll('.faq-item');
-        const categoryButtons = document.querySelectorAll('[data-category]');
-
-        faqItems.forEach(item => {
-            const button = item.querySelector('button');
-            button.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
+        // FAQ item toggle functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const content = item.querySelector('.faq-content');
+            
+            question.addEventListener('click', () => {
+                const isOpen = content.classList.contains('active');
                 
                 // Close all other items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
+                document.querySelectorAll('.faq-content').forEach(otherContent => {
+                    if (otherContent !== content) {
+                        otherContent.classList.remove('active');
+                        otherContent.style.maxHeight = '0px';
                     }
                 });
-
+                
                 // Toggle current item
-                item.classList.toggle('active');
+                content.classList.toggle('active');
+                content.style.maxHeight = isOpen ? '0px' : content.scrollHeight + 'px';
             });
         });
 
-        // Category filtering
-        categoryButtons.forEach(button => {
+        // Category filter functionality
+        document.querySelectorAll('.faq-button').forEach(button => {
             button.addEventListener('click', () => {
-                const category = button.dataset.category;
+                const category = button.getAttribute('data-category');
                 
                 // Update active button
-                categoryButtons.forEach(btn => {
-                    btn.classList.remove('bg-white/20');
+                document.querySelectorAll('.faq-button').forEach(btn => {
+                    btn.classList.remove('bg-purple-500/20', 'text-white');
+                    btn.classList.add('bg-white/10', 'text-white/60');
                 });
-                button.classList.add('bg-white/20');
-
-                // Filter FAQ items
-                faqItems.forEach(item => {
-                    if (category === 'all' || item.dataset.category === category) {
+                button.classList.remove('bg-white/10', 'text-white/60');
+                button.classList.add('bg-purple-500/20', 'text-white');
+                
+                // Show/hide FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
                         item.style.display = 'block';
                     } else {
                         item.style.display = 'none';
@@ -290,8 +301,35 @@
             });
         });
 
-        // Set initial active category
-        document.querySelector('[data-category="all"]').click();
+        // Load header
+        fetch('../components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load header');
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                // Initialize mobile menu after header is loaded
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', () => {
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Load footer
+        fetch('../components/footer.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load footer');
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
     </script>
 </body>
 </html> 
