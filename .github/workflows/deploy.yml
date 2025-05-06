@@ -5,18 +5,16 @@ on:
     branches: [ main ]
 
 jobs:
-  ftp-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@master
         with:
-          server: ftp.waqup.space
-          username: waqup-website@waqup.space
-          password: '&j6yV5#LoDNM'
-          server-dir: /public_html/
+          server: 185.12.116.160
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          dangerous-clean-slate: true 
+          server-dir: public_html/ 
