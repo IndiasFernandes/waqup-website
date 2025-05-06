@@ -1,92 +1,59 @@
 # waqup Website
 
-A modern, responsive website for waqup - an AI-driven mindfulness and personal development platform.
+A clean, static marketing website for waqup - an AI-driven mindfulness and personal development platform.
 
 ## Overview
 
-waqup helps users transform their mindset through personalized, AI-driven affirmations and subconscious rewiring. The website serves as the main landing page and marketing platform for the service.
+This repository contains the source code for the waqup marketing website, which serves as the main landing page and marketing platform for the service. The site is built with semantic HTML5 and CSS, designed to be lightweight and fast.
 
 ## Structure
 
-The website consists of several key sections:
-
-- **Hero Section**: Main value proposition and call-to-action
-- **Features**: Overview of platform capabilities
-- **How It Works**: 4-step process explanation
-- **Pricing**: Free trial and premium subscription options
-- **Testimonials**: User success stories
-- **CTA Section**: Final conversion point
-- **Footer**: Navigation and legal information
-
-## Technology Stack
-
-- HTML5
-- Tailwind CSS (via CDN)
-- Inter font family
-- Responsive design for all devices
+```
+waqup-website/
+├── index.html          # Main landing page
+├── style.css           # All site styles
+├── images/            # Image assets
+├── fonts/             # Custom fonts (if any)
+└── .github/           # GitHub Actions workflow
+```
 
 ## Development
 
-### Local Development
-
 1. Clone the repository:
 ```bash
-git clone git@github.com:USERNAME/waqup-website.git
+git clone git@github.com:indiasfernandes/waqup-website.git
 cd waqup-website
 ```
 
-2. Open `index.html` in your browser or use a local server:
+2. Make your changes to `index.html` and `style.css`
+
+3. Test locally:
 ```bash
 python -m http.server 8000
 ```
 
-### Future Next.js Migration
-
-The site is prepared for future migration to Next.js with static export:
-
-1. Initialize Next.js:
+4. Commit and push your changes:
 ```bash
-npx create-next-app@latest . --typescript --tailwind --app --src-dir --import-alias "@/*"
-```
-
-2. Move `index.html` content to `app/page.tsx`
-3. Configure `next.config.js` for static export:
-```js
-module.exports = {
-  output: 'export',
-  images: {
-    unoptimized: true,
-  },
-}
+git add .
+git commit -m "Your changes"
+git push origin main
 ```
 
 ## Deployment
 
-### Current Deployment (Static)
+The site is automatically deployed to https://waqup.space via GitHub Actions whenever changes are pushed to the `main` branch. The deployment process:
 
-The site can be deployed via:
-- GitHub Pages
-- Any static hosting service
-- FTP upload to web server
+1. Triggers on push to `main`
+2. Uploads all files to the FTP server
+3. Deploys to the `/public_html/` directory
 
-### Future Deployment (Next.js)
+## Live Site
 
-When migrated to Next.js:
-1. Build the site:
-```bash
-npm run build
-```
+The website is live at: https://waqup.space
 
-2. Deploy options:
-- Vercel (recommended)
-- GitHub Pages
-- FTP upload of `/out` directory
+## Future Plans
 
-## Contributing
-
-1. Create a new branch for your feature
-2. Make your changes
-3. Submit a pull request
+This static site is designed to be easily converted to a React/Next.js application in the future. The current structure and class names are chosen to make this transition smooth.
 
 ## License
 
