@@ -35,6 +35,18 @@
         .faq-item.active .faq-icon {
             transform: rotate(180deg);
         }
+        .faq-question {
+            font-size: 1.125rem;
+            line-height: 1.5;
+            font-weight: 600;
+            color: white;
+        }
+        .faq-answer {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white min-h-screen">
@@ -88,13 +100,13 @@
                 <!-- General Questions -->
                 <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="general">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
-                        <span class="text-lg font-semibold">What is waqup?</span>
+                        <span class="faq-question">What is waqup?</span>
                         <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-content px-6 pb-4">
-                        <p class="text-white/80">
+                        <p class="faq-answer">
                             waqup is an AI-powered affirmation generator that helps you create personalized, positive affirmations to improve your mindset and achieve your goals. Our platform combines advanced AI technology with proven psychological principles to deliver effective, customized affirmations.
                         </p>
                     </div>
@@ -102,13 +114,13 @@
 
                 <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="general">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
-                        <span class="text-lg font-semibold">How does waqup work?</span>
+                        <span class="faq-question">How does waqup work?</span>
                         <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-content px-6 pb-4">
-                        <p class="text-white/80">
+                        <p class="faq-answer">
                             waqup uses advanced AI algorithms to analyze your goals, preferences, and current mindset to generate personalized affirmations. You can customize the tone, length, and focus of your affirmations, and our system will create unique, meaningful statements that resonate with you.
                         </p>
                     </div>
@@ -117,13 +129,13 @@
                 <!-- Account Questions -->
                 <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="account">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
-                        <span class="text-lg font-semibold">How do I create an account?</span>
+                        <span class="faq-question">How do I create an account?</span>
                         <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-content px-6 pb-4">
-                        <p class="text-white/80">
+                        <p class="faq-answer">
                             Creating an account is easy! Simply click the "Start Free" button on our homepage, enter your email address, and follow the registration process. You can also sign up using your Google or Apple account for a faster registration process.
                         </p>
                     </div>
@@ -131,13 +143,13 @@
 
                 <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="account">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
-                        <span class="text-lg font-semibold">Can I change my account settings?</span>
+                        <span class="faq-question">Can I change my account settings?</span>
                         <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-content px-6 pb-4">
-                        <p class="text-white/80">
+                        <p class="faq-answer">
                             Yes, you can easily manage your account settings by clicking on your profile icon in the top right corner. From there, you can update your personal information, notification preferences, and privacy settings.
                         </p>
                     </div>
@@ -146,13 +158,13 @@
                 <!-- Billing Questions -->
                 <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="billing">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
-                        <span class="text-lg font-semibold">What payment methods do you accept?</span>
+                        <span class="faq-question">What payment methods do you accept?</span>
                         <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-content px-6 pb-4">
-                        <p class="text-white/80">
+                        <p class="faq-answer">
                             We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and Apple Pay. All payments are processed securely through our payment processor.
                         </p>
                     </div>
@@ -160,13 +172,13 @@
 
                 <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="billing">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
-                        <span class="text-lg font-semibold">Can I cancel my subscription?</span>
+                        <span class="faq-question">Can I cancel my subscription?</span>
                         <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-content px-6 pb-4">
-                        <p class="text-white/80">
+                        <p class="faq-answer">
                             Yes, you can cancel your subscription at any time. Your access will continue until the end of your current billing period. To cancel, go to your account settings and click on "Subscription" to manage your plan.
                         </p>
                     </div>
@@ -175,13 +187,13 @@
                 <!-- Technical Questions -->
                 <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="technical">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
-                        <span class="text-lg font-semibold">What devices are supported?</span>
+                        <span class="faq-question">What devices are supported?</span>
                         <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-content px-6 pb-4">
-                        <p class="text-white/80">
+                        <p class="faq-answer">
                             waqup is accessible on all modern web browsers and has dedicated mobile apps for iOS and Android devices. Our platform is optimized for both desktop and mobile experiences.
                         </p>
                     </div>
@@ -189,13 +201,13 @@
 
                 <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="technical">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
-                        <span class="text-lg font-semibold">Is my data secure?</span>
+                        <span class="faq-question">Is my data secure?</span>
                         <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-content px-6 pb-4">
-                        <p class="text-white/80">
+                        <p class="faq-answer">
                             Yes, we take data security very seriously. All data is encrypted in transit and at rest. We use industry-standard security measures and regularly update our security protocols to ensure your information remains protected.
                         </p>
                     </div>
