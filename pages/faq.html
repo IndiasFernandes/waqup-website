@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - waqup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-item.active .faq-content {
+            max-height: 500px;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-black/20 backdrop-blur-lg border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="/" class="text-xl font-bold">waqup</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white/80 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="/#features" class="text-white/80 hover:text-white">Features</a>
+                        <a href="/#how-it-works" class="text-white/80 hover:text-white">How It Works</a>
+                        <a href="/#testimonials" class="text-white/80 hover:text-white">Testimonials</a>
+                        <a href="/#pricing" class="text-white/80 hover:text-white">Pricing</a>
+                        <a href="/landing" class="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/90 transition-colors">
+                            Start Free
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-bold mb-8">Frequently Asked Questions</h1>
+            
+            <!-- FAQ Categories -->
+            <div class="mb-12">
+                <div class="flex flex-wrap gap-4">
+                    <button class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors" data-category="all">All</button>
+                    <button class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors" data-category="general">General</button>
+                    <button class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors" data-category="account">Account</button>
+                    <button class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors" data-category="billing">Billing</button>
+                    <button class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors" data-category="technical">Technical</button>
+                </div>
+            </div>
+
+            <!-- FAQ Items -->
+            <div class="space-y-4">
+                <!-- General Questions -->
+                <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="general">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
+                        <span class="text-lg font-semibold">What is waqup?</span>
+                        <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-4">
+                        <p class="text-white/80">
+                            waqup is an AI-powered affirmation generator that helps you create personalized, positive affirmations to improve your mindset and achieve your goals. Our platform combines advanced AI technology with proven psychological principles to deliver effective, customized affirmations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="general">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
+                        <span class="text-lg font-semibold">How does waqup work?</span>
+                        <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-4">
+                        <p class="text-white/80">
+                            waqup uses advanced AI algorithms to analyze your goals, preferences, and current mindset to generate personalized affirmations. You can customize the tone, length, and focus of your affirmations, and our system will create unique, meaningful statements that resonate with you.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Account Questions -->
+                <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="account">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
+                        <span class="text-lg font-semibold">How do I create an account?</span>
+                        <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-4">
+                        <p class="text-white/80">
+                            Creating an account is easy! Simply click the "Start Free" button on our homepage, enter your email address, and follow the registration process. You can also sign up using your Google or Apple account for a faster registration process.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="account">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
+                        <span class="text-lg font-semibold">Can I change my account settings?</span>
+                        <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-4">
+                        <p class="text-white/80">
+                            Yes, you can easily manage your account settings by clicking on your profile icon in the top right corner. From there, you can update your personal information, notification preferences, and privacy settings.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Billing Questions -->
+                <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="billing">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
+                        <span class="text-lg font-semibold">What payment methods do you accept?</span>
+                        <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-4">
+                        <p class="text-white/80">
+                            We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and Apple Pay. All payments are processed securely through our payment processor.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="billing">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
+                        <span class="text-lg font-semibold">Can I cancel my subscription?</span>
+                        <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-4">
+                        <p class="text-white/80">
+                            Yes, you can cancel your subscription at any time. Your access will continue until the end of your current billing period. To cancel, go to your account settings and click on "Subscription" to manage your plan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Technical Questions -->
+                <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="technical">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
+                        <span class="text-lg font-semibold">What devices are supported?</span>
+                        <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-4">
+                        <p class="text-white/80">
+                            waqup is accessible on all modern web browsers and has dedicated mobile apps for iOS and Android devices. Our platform is optimized for both desktop and mobile experiences.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white/10 rounded-lg overflow-hidden" data-category="technical">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/20 transition-colors">
+                        <span class="text-lg font-semibold">Is my data secure?</span>
+                        <svg class="faq-icon h-6 w-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-4">
+                        <p class="text-white/80">
+                            Yes, we take data security very seriously. All data is encrypted in transit and at rest. We use industry-standard security measures and regularly update our security protocols to ensure your information remains protected.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Still Have Questions -->
+            <section class="mt-12 text-center">
+                <h2 class="text-2xl font-semibold mb-4">Still Have Questions?</h2>
+                <p class="text-white/80 mb-6">Can't find the answer you're looking for? Please chat to our friendly team.</p>
+                <a href="/contact.html" class="inline-block bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-white/90 transition-colors">
+                    Contact Us
+                </a>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4 sm:px-6 lg:px-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">waqup</h4>
+                    <p class="text-white/60">Transform your mind with AI-powered affirmations.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/#features" class="text-white/60 hover:text-white">Features</a></li>
+                        <li><a href="/#how-it-works" class="text-white/60 hover:text-white">How It Works</a></li>
+                        <li><a href="/#pricing" class="text-white/60 hover:text-white">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/pages/privacy-policy.html" class="text-white/60 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="/pages/terms-of-service.html" class="text-white/60 hover:text-white">Terms of Service</a></li>
+                        <li><a href="/pages/cookie-policy.html" class="text-white/60 hover:text-white">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/pages/support.html" class="text-white/60 hover:text-white">Support</a></li>
+                        <li><a href="/pages/contact.html" class="text-white/60 hover:text-white">Contact Us</a></li>
+                        <li><a href="/pages/faq.html" class="text-white/60 hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-sm text-white/40 mb-4 md:mb-0">
+                    © 2024 waqup. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // FAQ functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        const categoryButtons = document.querySelectorAll('[data-category]');
+
+        faqItems.forEach(item => {
+            const button = item.querySelector('button');
+            button.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+
+        // Category filtering
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.dataset.category;
+                
+                // Update active button
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('bg-white/20');
+                });
+                button.classList.add('bg-white/20');
+
+                // Filter FAQ items
+                faqItems.forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Set initial active category
+        document.querySelector('[data-category="all"]').click();
+    </script>
+</body>
+</html> 
