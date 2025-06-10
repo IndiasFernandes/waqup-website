@@ -30,4 +30,25 @@ async function handleSubmit(event) {
         console.error('Error:', error);
         alert('Failed to join waitlist. Please try again.');
     }
-} 
+}
+
+// Show loading state and track form submission
+document.getElementById('waitlistForm').addEventListener('submit', function(event) {
+    // Don't prevent default as Formspree needs to handle the submission
+    const button = this.querySelector('button[type="submit"]');
+    const originalText = button.textContent;
+    button.textContent = 'Submitting...';
+    button.disabled = true;
+
+    // Track form submission with Google Analytics
+    gtag('event', 'form_submission', {
+        'event_category': 'Waitlist',
+        'event_label': 'Founding Member Registration'
+    });
+
+    // Reset button state after submission (whether successful or not)
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.disabled = false;
+    }, 2000);
+}); 
