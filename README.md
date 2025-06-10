@@ -1,68 +1,76 @@
-# waqup Website
+# waQup Pre-release Landing Page
 
-A clean, static marketing website for waqup - an AI-driven mindfulness and personal development platform.
-
-## Overview
-
-This repository contains the source code for the waqup marketing website, which serves as the main landing page and marketing platform for the service. The site is built with semantic HTML5 and CSS, designed to be lightweight and fast.
+A standalone landing page for collecting founding member signups for waQup. This page is designed to be easily deployable to any static hosting service.
 
 ## Structure
 
 ```
-waqup-website/
+pre-release/
 ├── index.html          # Main landing page
-├── style.css           # All site styles
-├── images/            # Image assets
-├── fonts/             # Custom fonts (if any)
-└── .github/           # GitHub Actions workflow
+├── styles/
+│   └── main.css       # Styles for the landing page
+├── js/
+│   └── main.js        # JavaScript for form handling
+└── README.md          # This file
 ```
+
+## Features
+
+- Modern, responsive design
+- Founding member signup form
+- Supabase integration for data collection
+- No external dependencies (except Google Fonts)
+- Mobile-friendly layout
+
+## Setup
+
+1. Replace the Supabase configuration in `js/main.js`:
+   ```javascript
+   'apikey': 'YOUR_ANON_KEY' // Replace with your actual Supabase anon key
+   ```
+
+2. Make sure you have a `waitlist` table in your Supabase database with the following columns:
+   - name (text)
+   - email (text)
+   - interest (text)
+   - timestamp (timestamptz)
+   - type (text)
+
+3. Deploy the contents of this folder to any static hosting service:
+   - GitHub Pages
+   - Netlify
+   - Vercel
+   - Any standard web hosting
 
 ## Development
 
-1. Clone the repository:
-```bash
-git clone git@github.com:indiasfernandes/waqup-website.git
-cd waqup-website
-```
+The page is built with vanilla HTML, CSS, and JavaScript. No build tools or npm packages are required. To make changes:
 
-2. Make your changes to `index.html` and `style.css`
+1. Edit `index.html` for structure changes
+2. Edit `styles/main.css` for styling changes
+3. Edit `js/main.js` for form handling and functionality changes
 
-3. Test locally:
-```bash
-python -m http.server 8000
-```
+## Design
 
-4. Commit and push your changes:
-```bash
-git add .
-git commit -m "Your changes"
-git push origin main
-```
+The page uses a dark theme with purple accents, matching the main waQup application design. Key design features:
 
-## Deployment
+- Inter font family
+- Gradient backgrounds
+- Glass-morphism effects
+- Responsive grid layout
+- Smooth animations
+- Mobile-first approach
 
-The site is automatically deployed to https://waqup.space via GitHub Actions whenever changes are pushed to the `main` branch. The deployment process:
+## Browser Support
 
-1. Triggers on push to `main`
-2. Uploads all files to the FTP server
-3. Deploys to the `/public_html/` directory
+The page is compatible with all modern browsers:
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-## Live Site
+## Notes
 
-The website is live at: https://waqup.space
-
-## Future Plans
-
-This static site is designed to be easily converted to a React/Next.js application in the future. The current structure and class names are chosen to make this transition smooth.
-
-## License
-
-Private repository - All rights reserved
-
-## Test Deployment
-
-This line was added to test the GitHub Actions deployment workflow. If you can see this on the live site, the deployment is working correctly!
-
-## Contact
-
-For questions about the website, contact the development team. 
+- The form submits data to Supabase but can be modified to use any backend
+- The design is consistent with the main waQup application
+- All assets are included in the repository or loaded from CDNs 
