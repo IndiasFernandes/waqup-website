@@ -218,6 +218,100 @@ button:hover {
     font-weight: 500;
 }
 
+.pricing-comparison {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    padding: 0 1rem;
+}
+
+.price-card {
+    flex: 1;
+    max-width: 300px;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(168, 85, 247, 0.1);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.price-card.founder {
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15);
+}
+
+.price-card .best-value {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--purple-600), var(--indigo-600));
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.price-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.price {
+    margin: 1.5rem 0;
+}
+
+.price .amount {
+    font-size: 2.5rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--purple-500), var(--indigo-500));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.price .period {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.total-note {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.process-note {
+    background: rgba(168, 85, 247, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 500px;
+    text-align: left;
+}
+
+.process-note p {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--purple-500);
+}
+
+.process-note ol {
+    list-style-position: inside;
+    color: var(--text-secondary);
+}
+
+.process-note li {
+    margin-bottom: 0.5rem;
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
@@ -233,5 +327,18 @@ button:hover {
 
     .cta-section {
         padding: 2rem 1rem;
+    }
+
+    .pricing-comparison {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .price-card {
+        width: 100%;
+    }
+
+    .price-card.founder {
+        order: -1;
     }
 } 
