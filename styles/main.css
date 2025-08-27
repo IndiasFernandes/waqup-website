@@ -1,7 +1,9 @@
 :root {
-    --purple-500: rgb(168, 85, 247);
-    --purple-600: rgb(147, 51, 234);
-    --purple-700: rgb(126, 34, 206);
+    --purple-500: rgb(59, 130, 246);
+    --purple-600: rgb(37, 99, 235);
+    --purple-700: rgb(29, 78, 216);
+    --accent-500: rgb(20, 184, 166);
+    --accent-600: rgb(13, 148, 136);
     --indigo-500: rgb(99, 102, 241);
     --indigo-600: rgb(79, 70, 229);
     --background: rgb(17, 17, 17);
@@ -35,8 +37,8 @@ body::before {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(circle at 20% 20%, rgba(126, 34, 206, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(79, 70, 229, 0.15) 0%, transparent 50%);
+        radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(20, 184, 166, 0.12) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
 }
@@ -81,7 +83,7 @@ h1 {
 .benefit-card {
     background: var(--card-bg);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.1);
     border-radius: 1rem;
     padding: 2rem;
     transition: all 0.3s ease;
@@ -90,8 +92,8 @@ h1 {
 
 .benefit-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(168, 85, 247, 0.3);
-    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
 }
 
 .benefit-card h3 {
@@ -109,7 +111,7 @@ h1 {
     text-align: center;
     padding: 4rem 2rem;
     background: var(--card-bg);
-    border: 1px solid rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.1);
     border-radius: 1.5rem;
     margin: 2rem auto;
     max-width: 800px;
@@ -125,7 +127,7 @@ input, select {
     width: 100%;
     padding: 1rem;
     background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.1);
     border-radius: 0.5rem;
     color: var(--text-primary);
     font-size: 1rem;
@@ -153,12 +155,12 @@ button {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(168, 85, 247, 0.3);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
 }
 
 .price-tag {
@@ -176,14 +178,14 @@ button:hover {
 
 .limited-spots {
     display: inline-block;
-    background: rgba(168, 85, 247, 0.1);
+    background: rgba(59, 130, 246, 0.1);
     color: var(--purple-500);
     padding: 0.75rem 1.5rem;
     border-radius: 2rem;
     font-size: 0.875rem;
     font-weight: 500;
     margin-bottom: 2rem;
-    border: 1px solid rgba(168, 85, 247, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .features-list {
@@ -241,8 +243,8 @@ button:hover {
 }
 
 .price-card.founder {
-    border-color: rgba(168, 85, 247, 0.3);
-    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
 }
 
 .price-card .best-value {

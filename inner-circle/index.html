@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>waQup - Join the Inner Circle</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        /* Lightweight helpers for step transitions */
+        .icf-viewport { position: relative; min-height: 300px; height: calc(100vh - 64px - 96px); margin-top: 64px; margin-bottom: 96px; display: flex; align-items: center; justify-content: center; }
+        .icf-step { position: absolute; inset: 0; opacity: 0; transition: opacity .3s ease; pointer-events: none; user-select: none; z-index: 10; }
+        .icf-step.active { position: relative; opacity: 1; pointer-events: auto; user-select: auto; z-index: 20; }
+        .icf-card { background: linear-gradient(180deg, rgba(26,26,26,.9), rgba(26,26,26,.75)); border: 1px solid rgba(59,130,246,.22); border-radius: 1rem; padding: 1.25rem; box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.02) inset; backdrop-filter: blur(10px); }
+        .icf-controls { position: fixed; bottom: 16px; left: 7vw; right: 7vw; display: flex; justify-content: space-between; gap: .9rem; align-items: center; z-index: 40; }
+        .icf-controls .ghost { background: transparent; border: 1px solid rgba(59,130,246,.35); color: var(--text-primary); }
+        .icf-grid { display: grid; gap: .75rem; }
+        /* Shell spacing and balance */
+        .inner-circle .container { padding: 0; }
+        #icf { width: calc(100vw - 14vw); max-width: 920px; padding: 0 1.25rem 1.5rem; margin-left: 7vw; margin-right: 7vw; margin-top: 0; box-sizing: border-box; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .icf-top { position: fixed; top: 16px; left: 7vw; right: 7vw; z-index: 40; }
+        .icf-label { margin-bottom: .4rem; justify-content: space-between; gap: .5rem; }
+        @media (max-width: 768px) {
+          #icf { width: calc(100vw - 12vw); max-width: 720px; padding: 0 1rem 1.25rem; margin-left: 6vw; margin-right: 6vw; margin-top: 0; min-height: 100vh; }
+          .icf-viewport { height: calc(100vh - 56px - 88px); margin-top: 56px; margin-bottom: 88px; }
+        }
+        @media (max-width: 480px) {
+          #icf { width: calc(100vw - 8vw); padding: 0 .9rem 1.1rem; margin-left: 4vw; margin-right: 4vw; margin-top: 0; min-height: 100vh; }
+        }
+        /* Tile grid for Step 1 */
+        .icf-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+        @media (max-width: 960px) { .icf-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 560px) { .icf-tiles { grid-template-columns: 1fr; } }
+        .icf-tile { position: relative; display: flex; align-items: center; justify-content: center; min-height: 78px; padding: .9rem; border-radius: .9rem; border: 1px solid rgba(59,130,246,.22); background: radial-gradient(120% 120% at 0% 0%, rgba(59,130,246,.08), transparent 40%), rgba(7,7,7,.42); color: var(--text-primary); cursor: pointer; transition: transform .16s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease; }
+        .icf-tile:hover { transform: translateY(-2px); border-color: rgba(59,130,246,.45); box-shadow: 0 10px 24px rgba(0,0,0,.35); }
+        .icf-tile input { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+        .icf-tile .label { font-weight: 560; letter-spacing: .2px; }
+        .icf-tile.selected { border-color: rgba(59,130,246,.7); box-shadow: 0 0 0 2px rgba(59,130,246,.2), 0 12px 28px rgba(0,0,0,.4); background: radial-gradient(120% 120% at 0% 0%, rgba(59,130,246,.12), transparent 40%), rgba(10,12,16,.6); }
+        .icf-tile:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,.35); }
+        /* Tailwind-like buttons for intentions */
+        .tw-btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; padding: .75rem .9rem; border-radius: .75rem; border: 1px solid rgba(59,130,246,.22); background: rgba(10,12,16,.55); color: var(--text-primary); cursor: pointer; transition: transform .14s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease; user-select: none; }
+        .tw-btn:hover { transform: translateY(-1px); border-color: rgba(59,130,246,.45); background: rgba(9,12,20,.6); }
+        .tw-btn[aria-pressed="true"] { border-color: rgba(59,130,246,.7); box-shadow: 0 0 0 2px rgba(59,130,246,.2), 0 10px 24px rgba(0,0,0,.35); background: linear-gradient(180deg, rgba(9,12,20,.75), rgba(9,12,20,.55)); }
+        .tw-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; margin-top: .75rem; }
+        @media (max-width: 640px){ .tw-grid { grid-template-columns: 1fr; } }
+        .icon-badge { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:8px; background: radial-gradient(circle at 30% 20%, rgba(59,130,246,.45), rgba(59,130,246,.15)); outline: 1px solid rgba(255,255,255,.06); box-shadow: inset 0 0 0 1px rgba(0,0,0,.3), 0 2px 8px rgba(59,130,246,.25); font-size: 13px; }
+        .tw-btn span.label { line-height: 1.3; }
+        .other-wrap { display:none; margin:0; height:0; overflow:hidden; }
+        .other-wrap.active { display:block; animation: icfFadeUp .25s ease both; }
+        .other-input { width:100%; padding:.8rem 1rem; background: rgba(0,0,0,.25); border: 1px solid rgba(59,130,246,.22); border-radius:.6rem; color: var(--text-primary); }
+        .other-input:focus { outline:none; border-color: var(--purple-500); box-shadow: 0 0 0 2px rgba(59,130,246,.25); }
+        .icf-check { display: flex; align-items: center; gap: .8rem; padding: .85rem 1rem; border: 1px solid rgba(59,130,246,.22); border-radius: .7rem; background: rgba(7,7,7,.42); transition: transform .14s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease; cursor: pointer; min-height: 60px; }
+        .icf-check:has(input:checked) { border-color: rgba(59,130,246,.65); box-shadow: 0 0 0 2px rgba(59,130,246,.18), 0 10px 24px rgba(0,0,0,.35); background: linear-gradient(180deg, rgba(9,12,20,.75), rgba(9,12,20,.55)); }
+        .icf-check:hover { border-color: rgba(59,130,246,.45); background: rgba(9,12,20,.6); transform: translateY(-1px); }
+        .icf-check input { margin-top: .2rem; }
+        /* Custom checkbox styling for clarity and alignment */
+        .icf-check input[type="checkbox"] {
+          appearance: none;
+          -webkit-appearance: none;
+          width: 14px; height: 14px; border-radius: 4px;
+          border: 1.5px solid rgba(59,130,246,.6);
+          background: rgba(0,0,0,.25); position: relative; flex: 0 0 14px;
+        }
+        .icf-check input[type="checkbox"]:hover { border-color: var(--purple-500); }
+        .icf-check input[type="checkbox"]:focus { outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,.25); }
+        .icf-check input[type="checkbox"]:checked {
+          border-color: var(--purple-500);
+          background: linear-gradient(135deg, var(--purple-600), var(--accent-600));
+        }
+        .icf-check input[type="checkbox"]:checked::after {
+          content: '';
+          position: absolute; left: 3.5px; top: 0.5px; width: 5px; height: 8px;
+          border: 2px solid white; border-top: none; border-left: none;
+          transform: rotate(45deg);
+        }
+        .icf-check:hover { border-color: rgba(59,130,246,.45); background: rgba(0,0,0,.28); }
+        .icf-check:focus-within { box-shadow: 0 0 0 3px rgba(59,130,246,.25); }
+        .icf-text { display: flex; flex-direction: column; align-items: flex-start; color: var(--text-primary); line-height: 1.45; text-align: left; white-space: normal; word-break: normal; width: 100%; }
+        .consent-row { grid-template-columns: 20px 1fr !important; align-items: flex-start !important; }
+        .icf-text strong { display: block; font-weight: 640; letter-spacing: .1px; margin-bottom: .1rem; font-size: 1rem; }
+        .icf-text small { display: block; color: var(--text-secondary); font-size: .9rem; max-width: 60ch; }
+        .icf-option { display: contents; }
+        .icf-progress { height: 10px; width: 100%; border-radius: 999px; background: rgba(255,255,255,.06); overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,.4); }
+        .icf-progress > .bar { height: 100%; width: 0%; background: linear-gradient(135deg, var(--purple-600), var(--accent-600)); transition: width .25s ease; box-shadow: 0 1px 8px rgba(59,130,246,.45); }
+        .icf-label { display: flex; justify-content: space-between; font-size: .75rem; color: var(--text-secondary); margin-bottom: .35rem; }
+        textarea { width: 100%; padding: 1rem; background: rgba(0,0,0,.2); border: 1px solid rgba(59,130,246,.18); border-radius: .6rem; color: var(--text-primary); min-height: 140px; }
+        textarea:focus { outline: none; border-color: var(--purple-500); box-shadow: 0 0 0 2px rgba(59,130,246,.25); }
+        input[type="text"], input[type="email"] { width: 100%; padding: 1rem; background: rgba(0,0,0,.2); border: 1px solid rgba(59,130,246,.18); border-radius: .6rem; color: var(--text-primary); }
+        input[type="text"]:focus, input[type="email"]:focus { outline: none; border-color: var(--purple-500); box-shadow: 0 0 0 2px rgba(59,130,246,.25); }
+        label.block span.block { font-size: .9rem; letter-spacing: .2px; }
+        h2.center { letter-spacing: .2px; }
+        .button, button { box-shadow: 0 10px 24px rgba(59,130,246,.22); }
+        .button:hover, button:hover { transform: translateY(-2px); box-shadow: 0 16px 30px rgba(59,130,246,.28); }
+        .icf-step.active { animation: icfFadeUp .35s ease both; }
+        @keyframes icfFadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 640px) { .icf-name-grid { grid-template-columns: 1fr !important; } }
+        .center { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!--<div class="hero">
+            <h1>Join the Inner Circle</h1>
+            <p class="subtitle">Early supporters shaping waQup’s journey. Flow through a few quick steps.</p>
+        </div>  -->
+        <div class="cta-section" id="icf">
+            <div class="icf-top">
+              <div class="icf-label">
+                  <span id="icf-step-text">Step 1 of 11</span>
+                  <span id="icf-percent">9%</span>
+              </div>
+              <div class="icf-progress"><div class="bar" id="icf-bar" style="width: 9%"></div></div>
+            </div>
+
+            <div class="icf-viewport" id="icf-viewport">
+                <!-- 0. Intentions -->
+                <section class="icf-step active" data-step="0">
+                    <div class="icf-card">
+                        <h2 class="center" style="margin-bottom: .25rem;">How are you most drawn to use waQup?</h2>
+                        <p class="center" style="color: var(--text-secondary); margin-bottom:.75rem;">You can choose more than one. This helps us build the right experience for you.</p>
+                        <div class="tw-grid" id="icf-intentions">
+                            <button type="button" class="tw-btn" aria-pressed="false" aria-label="For my own inner work and healing" data-value="user"><span class="icon-badge">🌿</span><span class="label">For my own inner work and healing</span></button>
+                            <button type="button" class="tw-btn" aria-pressed="false" aria-label="To guide others using my voice or presence" data-value="facilitator"><span class="icon-badge">🎤</span><span class="label">To guide others using my voice or presence</span></button>
+                            <button type="button" class="tw-btn" aria-pressed="false" aria-label="To share this in a space I hold" data-value="venue"><span class="icon-badge">🏠</span><span class="label">To share this in a space I hold</span></button>
+                            <button type="button" class="tw-btn" aria-pressed="false" aria-label="Just curious and exploring" data-value="observer"><span class="icon-badge">✨</span><span class="label">Just curious and exploring</span></button>
+                            <button type="button" class="tw-btn" aria-pressed="false" aria-label="Other intention" data-value="other"><span class="icon-badge">➕</span><span class="label">Other</span></button>
+                        </div>
+                        <div class="other-wrap" id="icf-other-wrap">
+                            <input type="text" id="icf-other-input" class="other-input" placeholder="Tell us more...">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1. Name (First + Last) -->
+                <section class="icf-step" data-step="1">
+                    <div class="icf-card">
+                        <div class="icf-grid icf-name-grid" style="grid-template-columns: 1fr 1fr; gap: .75rem;">
+                            <label class="block">
+                                <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">First name</span>
+                                <input type="text" id="icf-first-name" placeholder="Jane">
+                            </label>
+                            <label class="block">
+                                <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">Last name</span>
+                                <input type="text" id="icf-last-name" placeholder="Doe">
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Email -->
+                <section class="icf-step" data-step="2">
+                    <div class="icf-card">
+                        <label class="block">
+                            <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">Your email</span>
+                            <input type="email" id="icf-email" placeholder="you@example.com">
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 3. Calling -->
+                <section class="icf-step" data-step="3">
+                    <div class="icf-card">
+                        <label class="block">
+                            <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">What’s calling you right now?</span>
+                            <textarea id="icf-calling" placeholder="Share anything that feels alive for you"></textarea>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 4. Hard to shift -->
+                <section class="icf-step" data-step="4">
+                    <div class="icf-card">
+                        <label class="block">
+                            <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">What feels hard to shift or sustain?</span>
+                            <textarea id="icf-hard" placeholder="Patterns, habits, or challenges you notice"></textarea>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 5. Support look like -->
+                <section class="icf-step" data-step="5">
+                    <div class="icf-card">
+                        <label class="block">
+                            <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">What would support look like?</span>
+                            <textarea id="icf-support" placeholder="What would help you most right now?"></textarea>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 6. Resonance -->
+                <section class="icf-step" data-step="6">
+                    <div class="icf-card">
+                        <h2 class="center" style="margin-bottom:.75rem;">What resonates?</h2>
+                        <div class="icf-grid">
+                            <label class="icf-check" tabindex="0" role="checkbox" aria-checked="false">
+                                <input class="icf-option" type="checkbox" name="resonance" value="affirmations">
+                                <span class="icf-text"><strong>Affirmations</strong><small>Short, positive statements to rewire beliefs and focus attention.</small></span>
+                            </label>
+                            <label class="icf-check" tabindex="0" role="checkbox" aria-checked="false">
+                                <input class="icf-option" type="checkbox" name="resonance" value="mantras">
+                                <span class="icf-text"><strong>Mantras</strong><small>Rhythmic phrases or sounds repeated to steady the mind.</small></span>
+                            </label>
+                            <label class="icf-check" tabindex="0" role="checkbox" aria-checked="false">
+                                <input class="icf-option" type="checkbox" name="resonance" value="rituals">
+                                <span class="icf-text"><strong>Rituals</strong><small>Simple, repeatable actions that anchor desired states in daily life.</small></span>
+                            </label>
+                            <label class="icf-check" tabindex="0" role="checkbox" aria-checked="false">
+                                <input class="icf-option" type="checkbox" name="resonance" value="other">
+                                <span class="icf-text"><strong>Other</strong><small>Anything else that resonates for you right now.</small></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. Facilitator optional -->
+                <section class="icf-step" data-step="7">
+                    <div class="icf-card">
+                        <label class="block">
+                            <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">If you facilitate, anything you’d like to share? (optional)</span>
+                            <textarea id="icf-facilitator" placeholder="Modalities, interests, offerings"></textarea>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 8. Venue optional -->
+                <section class="icf-step" data-step="8">
+                    <div class="icf-card">
+                        <label class="block">
+                            <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">If you have a venue, tell us more (optional)</span>
+                            <textarea id="icf-venue" placeholder="Location, capacity, intentions"></textarea>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 9. Anything else -->
+                <section class="icf-step" data-step="9">
+                    <div class="icf-card">
+                        <label class="block">
+                            <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">Anything else? (optional)</span>
+                            <textarea id="icf-anything" placeholder="Share anything you’d like us to know"></textarea>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 10. Final consent + CTA -->
+                <section class="icf-step" data-step="10">
+                    <div class="icf-card">
+                        <label class="icf-check" style="background: transparent; align-items: center;" tabindex="0" role="checkbox" aria-checked="false">
+                            <input class="icf-option" type="checkbox" id="icf-consent">
+                            <span class="icf-text" style="margin-top: 0;">I consent to be contacted about the waQup Inner Circle and agree to basic data practices. I can opt out anytime.</span>
+                        </label>
+                        <button id="icf-submit" style="width:100%; margin-top:.5rem;">Request Early Access</button>
+                    </div>
+                </section>
+            </div>
+
+            <div class="icf-controls">
+                <button class="ghost" id="icf-back" disabled>Back</button>
+                <button id="icf-next">Next</button>
+            </div>
+        </div>
+
+        <div class="cta-section center" id="icf-thanks" style="display:none;">
+            <h2 style="font-size:1.75rem; margin-bottom:.5rem;">Thank you</h2>
+            <p class="subtitle" style="margin:0 auto;">We’ve received your interest for the Inner Circle. We’ll be in touch.</p>
+            <p style="margin-top:1rem;"><a href="/" class="button">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script>
+      (function(){
+        const viewport = document.getElementById('icf-viewport');
+        const steps = Array.from(viewport.querySelectorAll('.icf-step'));
+        const back = document.getElementById('icf-back');
+        const next = document.getElementById('icf-next');
+        const submit = document.getElementById('icf-submit');
+        const bar = document.getElementById('icf-bar');
+        const stepText = document.getElementById('icf-step-text');
+        const percent = document.getElementById('icf-percent');
+        const thanks = document.getElementById('icf-thanks');
+        const formCard = document.getElementById('icf');
+
+        let index = 0;
+
+        // Step 1 intentions behavior
+        const formState = { intentions: [] };
+        const intentions = document.getElementById('icf-intentions');
+        const otherWrap = document.getElementById('icf-other-wrap');
+        const otherInput = document.getElementById('icf-other-input');
+        if (intentions) {
+          intentions.querySelectorAll('.tw-btn').forEach((btn)=>{
+            btn.addEventListener('click', function(){
+              const val = btn.getAttribute('data-value');
+              const idx = formState.intentions.indexOf(val);
+              if (idx === -1) { formState.intentions.push(val); btn.setAttribute('aria-pressed','true'); }
+              else { formState.intentions.splice(idx,1); btn.setAttribute('aria-pressed','false'); }
+
+              if (val === 'other') {
+                const isOn = btn.getAttribute('aria-pressed') === 'true';
+                if (isOn) {
+                  otherWrap.classList.add('active');
+                  requestAnimationFrame(()=>{ otherWrap.style.height = otherInput.scrollHeight + 'px'; otherInput.focus(); });
+                } else {
+                  otherWrap.style.height = '0px';
+                  setTimeout(()=>{ otherWrap.classList.remove('active'); otherInput.value = ''; }, 200);
+                }
+              }
+            });
+            btn.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); btn.click(); } });
+          });
+        }
+
+        function updateUI(){
+          steps.forEach((el,i)=>{
+            el.classList.toggle('active', i===index);
+          });
+          back.disabled = index===0;
+          next.disabled = index>=steps.length-1;
+          const pct = Math.round(((index+1)/steps.length)*100);
+          bar.style.width = pct+'%';
+          stepText.textContent = 'Step '+(index+1)+' of '+steps.length;
+          percent.textContent = pct+'%';
+        }
+
+        function go(delta){
+          const nextIndex = Math.max(0, Math.min(steps.length-1, index+delta));
+          if(nextIndex!==index){ index = nextIndex; updateUI(); }
+        }
+
+        back.addEventListener('click', ()=> go(-1));
+        next.addEventListener('click', ()=> go(1));
+
+        if(submit){
+          submit.addEventListener('click', function(){
+            const consent = document.getElementById('icf-consent');
+            if(consent && consent.checked){
+              formCard.style.display = 'none';
+              thanks.style.display = 'block';
+            } else {
+              submit.disabled = true;
+              setTimeout(()=>{ submit.disabled = false; }, 500);
+            }
+          });
+        }
+
+        updateUI();
+      })();
+    </script>
+</body>
+</html>
