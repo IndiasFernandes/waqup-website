@@ -79,6 +79,48 @@
         .consent-row input[type="checkbox"] { margin-top: .2rem; }
         .consent-row .icf-text { margin: 0; line-height: 1.4; }
         .consent-submit { width: 100%; max-width: 320px; margin: 1rem auto 0; padding: .85rem 1.5rem; font-size: .95rem; }
+        
+        /* Thank you screen styling */
+        .thanks-content { text-align: center; }
+        .thanks-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .thanks-content h2 { font-size: 1.75rem; margin-bottom: 1rem; color: var(--text-primary); }
+        .thanks-message { font-size: 1.1rem; line-height: 1.5; margin-bottom: 1.5rem; color: var(--text-secondary); }
+        .thanks-details { text-align: left; margin: 1.5rem 0; padding: 1rem; background: rgba(7,7,7,.3); border-radius: .75rem; border: 1px solid rgba(59,130,246,.15); }
+        .thanks-details p { margin-bottom: .75rem; color: var(--text-primary); }
+        .thanks-details ul { margin: 0; padding-left: 1.25rem; }
+        .thanks-details li { margin-bottom: .5rem; color: var(--text-secondary); line-height: 1.4; }
+        
+        /* Validation styling */
+        .validation-error { 
+          color: #f87171; 
+          font-size: 0.875rem; 
+          margin-top: 0.5rem; 
+          text-align: center; 
+          animation: fadeIn 0.3s ease; 
+        }
+        
+        /* Invalid field highlighting */
+        .icf-input-error {
+          border-color: #f87171 !important;
+          box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.25) !important;
+        }
+        
+        /* Conditional field transitions */
+        .conditional-step {
+          transition: opacity 0.3s ease, max-height 0.3s ease;
+          overflow: hidden;
+        }
+        
+        .conditional-step.hidden {
+          opacity: 0;
+          max-height: 0;
+          pointer-events: none;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
         .icf-text strong { display: block; font-weight: 640; letter-spacing: .1px; margin-bottom: .1rem; font-size: 1rem; }
         .icf-text small { display: block; color: var(--text-secondary); font-size: .9rem; max-width: 60ch; }
         .icf-option { display: contents; }
@@ -138,11 +180,11 @@
                         <div class="icf-grid icf-name-grid" style="grid-template-columns: 1fr 1fr; gap: .75rem;">
                             <label class="block">
                                 <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">First name</span>
-                                <input type="text" id="icf-first-name" placeholder="Jane">
+                                <input type="text" id="icf-first-name" name="firstName" placeholder="Jane">
                             </label>
                             <label class="block">
                                 <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">Last name</span>
-                                <input type="text" id="icf-last-name" placeholder="Doe">
+                                <input type="text" id="icf-last-name" name="lastName" placeholder="Doe">
                             </label>
                         </div>
                     </div>
@@ -153,7 +195,7 @@
                     <div class="icf-card">
                         <label class="block">
                             <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">Your email</span>
-                            <input type="email" id="icf-email" placeholder="you@example.com">
+                            <input type="email" id="icf-email" name="email" placeholder="you@example.com">
                         </label>
                     </div>
                 </section>
@@ -163,7 +205,7 @@
                     <div class="icf-card">
                         <label class="block">
                             <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">What’s calling you right now?</span>
-                            <textarea id="icf-calling" placeholder="Share anything that feels alive for you"></textarea>
+                            <textarea id="icf-calling" name="calling" placeholder="Share anything that feels alive for you"></textarea>
                         </label>
                     </div>
                 </section>
@@ -173,7 +215,7 @@
                     <div class="icf-card">
                         <label class="block">
                             <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">What feels hard to shift or sustain?</span>
-                            <textarea id="icf-hard" placeholder="Patterns, habits, or challenges you notice"></textarea>
+                            <textarea id="icf-hard" name="challenges" placeholder="Patterns, habits, or challenges you notice"></textarea>
                         </label>
                     </div>
                 </section>
@@ -183,7 +225,7 @@
                     <div class="icf-card">
                         <label class="block">
                             <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">What would support look like?</span>
-                            <textarea id="icf-support" placeholder="What would help you most right now?"></textarea>
+                            <textarea id="icf-support" name="support" placeholder="What would help you most right now?"></textarea>
                         </label>
                     </div>
                 </section>
@@ -215,27 +257,27 @@
                     <div class="icf-card">
                         <label class="block">
                             <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">If you facilitate, anything you’d like to share? (optional)</span>
-                            <textarea id="icf-facilitator" placeholder="Modalities, interests, offerings"></textarea>
+                            <textarea id="icf-facilitator" name="facilitator" placeholder="Modalities, interests, offerings"></textarea>
                         </label>
                     </div>
                 </section>
 
                 <!-- 8. Venue optional -->
-                <section class="icf-step" data-step="8">
+                <section class="icf-step conditional-step hidden" data-step="8">
                     <div class="icf-card">
                         <label class="block">
                             <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">If you have a venue, tell us more (optional)</span>
-                            <textarea id="icf-venue" placeholder="Location, capacity, intentions"></textarea>
+                            <textarea id="icf-venue" name="venue" placeholder="Location, capacity, intentions"></textarea>
                         </label>
                     </div>
                 </section>
 
                 <!-- 9. Anything else -->
-                <section class="icf-step" data-step="9">
+                <section class="icf-step conditional-step hidden" data-step="9">
                     <div class="icf-card">
                         <label class="block">
                             <span class="block" style="color: var(--text-secondary); margin-bottom:.5rem;">Anything else? (optional)</span>
-                            <textarea id="icf-anything" placeholder="Share anything you’d like us to know"></textarea>
+                            <textarea id="icf-anything" name="anythingElse" placeholder="Share anything you’d like us to know"></textarea>
                         </label>
                     </div>
                 </section>
@@ -245,7 +287,7 @@
                     <div class="icf-card">
                         <label class="icf-check consent-row" tabindex="0" role="checkbox" aria-checked="false">
                             <input class="icf-option" type="checkbox" id="icf-consent">
-                            <span class="icf-text">  I understand this form connects me to the waQup Inner Circle. I’m open to receiving updates and invitations aligned with this journey
+                            <span class="icf-text">  I understand this form connects me to the waQup Inner Circle. I’m open to receiving updates and invitations aligned with this journey.
                             </span>
                         </label>
                         <button id="icf-submit" class="consent-submit">Join the Circle</button>
@@ -262,7 +304,7 @@
         <div class="cta-section center" id="icf-thanks" style="display:none;">
             <h2 style="font-size:1.75rem; margin-bottom:.5rem;">Thank you</h2>
             <p class="subtitle" style="margin:0 auto;">We’ve received your interest for the Inner Circle. We’ll be in touch.</p>
-            <p style="margin-top:1rem;"><a href="/" class="button">Back to Home</a></p>
+            <p style="margin-top:1rem;"><a href="https://waqup.space" class="button">Back to Home</a></p>
         </div>
     </div>
 
@@ -281,8 +323,308 @@
 
         let index = 0;
 
-        // Step 1 intentions behavior
-        const formState = { intentions: [] };
+        // Form state management with localStorage backup
+        const STORAGE_KEY = 'icf_form_data';
+        const formState = {
+          intentions: [],
+          firstName: '',
+          lastName: '',
+          email: '',
+          calling: '',
+          challenges: '',
+          support: '',
+          resonance: [],
+          facilitator: '',
+          venue: '',
+          anythingElse: '',
+          consent: false,
+          otherText: ''
+        };
+
+        // Load saved form data
+        function loadFormData() {
+          try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+              const parsed = JSON.parse(saved);
+              Object.assign(formState, parsed);
+              
+              // Restore form values
+              restoreFormValues();
+              
+              // Restore step if available
+              const savedStep = localStorage.getItem('icf_current_step');
+              if (savedStep) {
+                index = parseInt(savedStep);
+                updateUI();
+              }
+            }
+          } catch (error) {
+            console.warn('Failed to load form data:', error);
+          }
+        }
+
+        // Save form data
+        function saveFormData() {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(formState));
+            localStorage.setItem('icf_current_step', index.toString());
+          } catch (error) {
+            console.warn('Failed to save form data:', error);
+          }
+        }
+
+        // Restore form values from state
+        function restoreFormValues() {
+          // Restore intentions
+          if (formState.intentions.length > 0) {
+            formState.intentions.forEach(val => {
+              const btn = document.querySelector(`[data-value="${val}"]`);
+              if (btn) {
+                btn.setAttribute('aria-pressed', 'true');
+                if (val === 'other') {
+                  const otherWrap = document.getElementById('icf-other-wrap');
+                  const otherInput = document.getElementById('icf-other-input');
+                  if (otherWrap && otherInput) {
+                    otherWrap.classList.add('active');
+                    otherWrap.style.height = 'auto';
+                    otherInput.value = formState.otherText || '';
+                  }
+                }
+              }
+            });
+          }
+
+          // Restore other form fields
+          const fields = ['firstName', 'lastName', 'email', 'calling', 'challenges', 'support', 'facilitator', 'venue', 'anythingElse'];
+          fields.forEach(field => {
+            const input = document.querySelector(`[name="${field}"]`);
+            if (input && formState[field]) {
+              input.value = formState[field];
+            }
+          });
+
+          // Restore resonance checkboxes
+          if (formState.resonance.length > 0) {
+            formState.resonance.forEach(val => {
+              const checkbox = document.querySelector(`input[value="${val}"]`);
+              if (checkbox) {
+                checkbox.checked = true;
+              }
+            });
+          }
+
+          // Restore consent
+          if (formState.consent) {
+            const consentCheckbox = document.getElementById('icf-consent');
+            if (consentCheckbox) {
+              consentCheckbox.checked = true;
+            }
+          }
+        }
+
+        // Validation functions for each step
+        function validateStep(stepIndex) {
+          switch(stepIndex) {
+            case 0: // Intentions
+              return formState.intentions.length > 0;
+            
+            case 1: // First Name and Last Name
+              return formState.firstName.trim().length > 0 && formState.lastName.trim().length > 0;
+            
+            case 2: // Email
+              const email = formState.email.trim();
+              return email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            
+            case 3: // What's calling you
+              return formState.calling.trim().length > 0;
+            
+            case 4: // What feels hard
+              return formState.challenges.trim().length > 0;
+            
+            case 5: // What would support look like
+              return formState.support.trim().length > 0;
+            
+            case 6: // Resonance
+              return formState.resonance.length > 0;
+            
+            case 7: // Facilitator (conditional)
+              if (formState.intentions.includes('facilitator')) {
+                return formState.facilitator.trim().length > 0;
+              }
+              return true;
+            
+            case 8: // Venue (conditional)
+              if (formState.intentions.includes('venue')) {
+                return formState.venue.trim().length > 0;
+              }
+              return true;
+            
+            case 9: // Anything else (conditional)
+              return true; // Optional field
+            
+            case 10: // Consent
+              return formState.consent;
+            
+            default:
+              return true;
+          }
+        }
+
+        // Show validation errors for current step
+        function showStepValidation() {
+          const currentStep = steps[index];
+          const errorElements = currentStep.querySelectorAll('.validation-error');
+          errorElements.forEach(el => el.remove());
+
+          // Remove error styling from all fields in current step
+          currentStep.querySelectorAll('.icf-input-error').forEach(el => {
+            el.classList.remove('icf-input-error');
+          });
+
+          let isValid = true;
+          let errorMessage = '';
+
+          switch(index) {
+            case 0: // Intentions
+              if (formState.intentions.length === 0) {
+                errorMessage = 'Please select at least one intention to continue.';
+                isValid = false;
+              }
+              break;
+            
+            case 1: // First Name and Last Name
+              if (formState.firstName.trim().length === 0) {
+                errorMessage = 'First name is required.';
+                isValid = false;
+                const input = currentStep.querySelector('input[name="firstName"]');
+                if (input) input.classList.add('icf-input-error');
+              }
+              if (formState.lastName.trim().length === 0) {
+                if (errorMessage) {
+                  errorMessage += ' Last name is also required.';
+                } else {
+                  errorMessage = 'Last name is required.';
+                }
+                isValid = false;
+                const input = currentStep.querySelector('input[name="lastName"]');
+                if (input) input.classList.add('icf-input-error');
+              }
+              break;
+            
+            case 2: // Email
+              if (formState.email.trim().length === 0) {
+                errorMessage = 'Email is required.';
+                isValid = false;
+                const input = currentStep.querySelector('input[name="email"]');
+                if (input) input.classList.add('icf-input-error');
+              } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email.trim())) {
+                errorMessage = 'Please enter a valid email address.';
+                isValid = false;
+                const input = currentStep.querySelector('input[name="email"]');
+                if (input) input.classList.add('icf-input-error');
+              }
+              break;
+            
+            case 3: // What's calling you
+              if (formState.calling.trim().length === 0) {
+                errorMessage = 'This field is required to understand your journey.';
+                isValid = false;
+                const input = currentStep.querySelector('textarea[name="calling"]');
+                if (input) input.classList.add('icf-input-error');
+              }
+              break;
+            
+            case 4: // What feels hard
+              if (formState.challenges.trim().length === 0) {
+                errorMessage = 'This field is required to understand your challenges.';
+                isValid = false;
+                const input = currentStep.querySelector('textarea[name="challenges"]');
+                if (input) input.classList.add('icf-input-error');
+              }
+              break;
+            
+            case 5: // What would support look like
+              if (formState.support.trim().length === 0) {
+                errorMessage = 'This field is required to understand your support needs.';
+                isValid = false;
+                const input = currentStep.querySelector('textarea[name="support"]');
+                if (input) input.classList.add('icf-input-error');
+              }
+              break;
+            
+            case 6: // Resonance
+              if (formState.resonance.length === 0) {
+                errorMessage = 'Please select at least one resonance type.';
+                isValid = false;
+                const checkboxes = currentStep.querySelectorAll('input[name="resonance"]');
+                checkboxes.forEach(cb => cb.classList.add('icf-input-error'));
+              }
+              break;
+            
+            case 7: // Facilitator (conditional)
+              if (formState.intentions.includes('facilitator') && formState.facilitator.trim().length === 0) {
+                errorMessage = 'This field is required for facilitators.';
+                isValid = false;
+                const input = currentStep.querySelector('textarea[name="facilitator"]');
+                if (input) input.classList.add('icf-input-error');
+              }
+              break;
+            
+            case 8: // Venue (conditional)
+              if (formState.intentions.includes('venue') && formState.venue.trim().length === 0) {
+                errorMessage = 'This field is required for venue holders.';
+                isValid = false;
+                const input = currentStep.querySelector('textarea[name="venue"]');
+                if (input) input.classList.add('icf-input-error');
+              }
+              break;
+            
+            case 9: // Anything else (conditional)
+              return true; // Optional field
+            
+            case 10: // Consent
+              if (!formState.consent) {
+                errorMessage = 'You must consent to continue.';
+                isValid = false;
+                const checkbox = currentStep.querySelector('#icf-consent');
+                if (checkbox) checkbox.classList.add('icf-input-error');
+              }
+              break;
+          }
+
+          if (!isValid && errorMessage) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'validation-error';
+            errorDiv.textContent = errorMessage;
+            
+            const stepContent = currentStep.querySelector('.icf-card');
+            stepContent.appendChild(errorDiv);
+          }
+
+          return isValid;
+        }
+
+        // Handle conditional field visibility
+        function updateConditionalFields() {
+          const facilitatorStep = steps[7]; // Step 8
+          const venueStep = steps[8]; // Step 9
+          
+          if (formState.intentions.includes('facilitator')) {
+            facilitatorStep.classList.remove('hidden');
+          } else {
+            facilitatorStep.classList.add('hidden');
+            formState.facilitator = '';
+          }
+          
+          if (formState.intentions.includes('venue')) {
+            venueStep.classList.remove('hidden');
+          } else {
+            venueStep.classList.add('hidden');
+            formState.venue = '';
+          }
+        }
+
         const intentions = document.getElementById('icf-intentions');
         const otherWrap = document.getElementById('icf-other-wrap');
         const otherInput = document.getElementById('icf-other-input');
@@ -304,8 +646,174 @@
                   setTimeout(()=>{ otherWrap.classList.remove('active'); otherInput.value = ''; }, 200);
                 }
               }
+              
+              updateConditionalFields();
+              saveFormData();
             });
             btn.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); btn.click(); } });
+          });
+        }
+
+        // Collect all form data
+        function collectFormData() {
+          // Collect intentions
+          formState.intentions = [];
+          document.querySelectorAll('.tw-btn[aria-pressed="true"]').forEach(btn => {
+            const val = btn.getAttribute('data-value');
+            formState.intentions.push(val);
+            if (val === 'other') {
+              const otherInput = document.getElementById('icf-other-input');
+              if (otherInput) {
+                formState.otherText = otherInput.value;
+              }
+            }
+          });
+
+          // Collect other form fields
+          const fields = ['firstName', 'lastName', 'email', 'calling', 'challenges', 'support', 'facilitator', 'venue', 'anythingElse'];
+          fields.forEach(field => {
+            const input = document.querySelector(`[name="${field}"]`);
+            if (input) {
+              formState[field] = input.value.trim();
+            }
+          });
+
+          // Collect resonance
+          formState.resonance = [];
+          document.querySelectorAll('input[name="resonance"]:checked').forEach(checkbox => {
+            formState.resonance.push(checkbox.value);
+          });
+
+          // Collect consent
+          const consentCheckbox = document.getElementById('icf-consent');
+          formState.consent = consentCheckbox ? consentCheckbox.checked : false;
+
+          return formState;
+        }
+
+        // Submit form data to Google Form
+        async function submitForm() {
+          const formData = collectFormData();
+          
+          // Show loading state
+          submit.disabled = true;
+          submit.textContent = 'Submitting...';
+          
+          try {
+            // Construct Google Form URL with form data
+            const baseUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSetQWPLa5OMkh7t7zjlimOrVDQiH2ztEGf85kgrG4zC0meLAQ/formResponse';
+            
+            // Create form data for Google Form
+            const googleFormData = new FormData();
+            
+            // Intentions (multiple entries for same field ID)
+            const intentionLabels = {
+              'user': 'For my own inner work and healing',
+              'facilitator': 'To guide others using my voice or presence',
+              'venue': 'To share this in a space I hold',
+              'other': formData.otherText || 'Other'
+            };
+            
+            formData.intentions.forEach(intention => {
+              const label = intentionLabels[intention];
+              if (label) {
+                googleFormData.append('entry.1041452331', label);
+              }
+            });
+            
+            // Name (combine first and last name)
+            const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+            googleFormData.append('entry.1903849690', fullName);
+            
+            // Email
+            googleFormData.append('entry.983067988', formData.email);
+            
+            // What's calling you
+            googleFormData.append('entry.1149286496', formData.calling);
+            
+            // What feels hard to shift
+            googleFormData.append('entry.1544444455', formData.challenges);
+            
+            // What would support look like
+            googleFormData.append('entry.1851558045', formData.support);
+            
+            // Resonance (multiple entries for same field ID)
+            const resonanceLabels = {
+              'affirmations': 'Affirmations',
+              'mantras': 'Mantras',
+              'rituals': 'Rituals'
+            };
+            
+            formData.resonance.forEach(resonance => {
+              const label = resonanceLabels[resonance];
+              if (label) {
+                googleFormData.append('entry.1213801279', label);
+              }
+            });
+            
+            // Facilitator (only if selected)
+            if (formData.intentions.includes('facilitator') && formData.facilitator) {
+              googleFormData.append('entry.48136303', formData.facilitator);
+            }
+            
+            // Venue (only if selected)
+            if (formData.intentions.includes('venue') && formData.venue) {
+              googleFormData.append('entry.1345763933', formData.venue);
+            }
+            
+            // Anything else (optional)
+            if (formData.anythingElse) {
+              googleFormData.append('entry.413368915', formData.anythingElse);
+            }
+            
+            // Submit to Google Form using fetch with POST
+            const response = await fetch(baseUrl, {
+              method: 'POST',
+              body: googleFormData,
+              mode: 'no-cors' // Required for Google Forms
+            });
+            
+            // Google Forms always returns 200 even on success, so we assume success
+            // Clear localStorage and show thanks
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem('icf_current_step');
+            
+            formCard.style.display = 'none';
+            thanks.style.display = 'block';
+            
+          } catch (error) {
+            console.error('Submission failed:', error);
+            
+            // Fallback: show thanks anyway (offline mode)
+            submit.textContent = 'Offline Mode - Thank You!';
+            setTimeout(() => {
+              localStorage.removeItem(STORAGE_KEY);
+              localStorage.removeItem('icf_current_step');
+              
+              formCard.style.display = 'none';
+              thanks.style.display = 'block';
+            }, 1000);
+          }
+        }
+
+        // Auto-save form inputs
+        function setupAutoSave() {
+          const inputs = document.querySelectorAll('input[type="text"], input[type="email"], textarea');
+          inputs.forEach(input => {
+            input.addEventListener('input', () => {
+              // Remove error styling when user starts typing
+              input.classList.remove('icf-input-error');
+              saveFormData();
+            });
+          });
+
+          const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+          checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+              // Remove error styling when user makes selection
+              checkbox.classList.remove('icf-input-error');
+              saveFormData();
+            });
           });
         }
 
@@ -319,11 +827,23 @@
           bar.style.width = pct+'%';
           stepText.textContent = 'Step '+(index+1)+' of '+steps.length;
           percent.textContent = pct+'%';
+          
+          saveFormData();
         }
 
         function go(delta){
+          if (delta > 0) { // Moving forward - validate current step
+            if (!validateStep(index)) {
+              showStepValidation();
+              return;
+            }
+          }
+          
           const nextIndex = Math.max(0, Math.min(steps.length-1, index+delta));
-          if(nextIndex!==index){ index = nextIndex; updateUI(); }
+          if(nextIndex!==index){ 
+            index = nextIndex; 
+            updateUI(); 
+          }
         }
 
         back.addEventListener('click', ()=> go(-1));
@@ -333,15 +853,17 @@
           submit.addEventListener('click', function(){
             const consent = document.getElementById('icf-consent');
             if(consent && consent.checked){
-              formCard.style.display = 'none';
-              thanks.style.display = 'block';
+              submitForm();
             } else {
-              submit.disabled = true;
-              setTimeout(()=>{ submit.disabled = false; }, 500);
+              showStepValidation();
             }
           });
         }
 
+        // Initialize
+        loadFormData();
+        setupAutoSave();
+        updateConditionalFields();
         updateUI();
       })();
     </script>
